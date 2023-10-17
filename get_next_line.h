@@ -6,7 +6,7 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:56:56 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/16 14:48:04 by reasuke          ###   ########.fr       */
+/*   Updated: 2023/10/17 15:05:24 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <stdbool.h>
-
-// TODO delete
-# include <stdio.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096

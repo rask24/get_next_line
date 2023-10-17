@@ -6,13 +6,13 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:02:52 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/16 15:24:05 by reasuke          ###   ########.fr       */
+/*   Updated: 2023/10/17 15:16:01 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*read_buffer(char **save, int fd)
+static char	*append_to_save(char **save, int fd)
 {
 	char		*buffer;
 	ssize_t		read_size;
@@ -54,7 +54,7 @@ char	*get_next_line(int fd)
 	if (end_ptr)
 		end_ptr++;
 	else
-		end_ptr = read_buffer(&save[fd], fd);
+		end_ptr = append_to_save(&save[fd], fd);
 	if (!end_ptr)
 		return (NULL);
 	line = ft_strndup(save[fd], end_ptr - save[fd]);
