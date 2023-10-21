@@ -6,7 +6,7 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:02:52 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/20 17:35:12 by reasuke          ###   ########.fr       */
+/*   Updated: 2023/10/21 23:16:17 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*append_to_save(char **save, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*save[FD_MAX];
+	static char	*save[FD_MAX + 1];
 	char		*line;
 	char		*tmp;
 	char		*end_ptr;
