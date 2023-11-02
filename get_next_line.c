@@ -6,7 +6,7 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:02:52 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/26 21:40:44 by yliu             ###   ########.fr       */
+/*   Updated: 2023/11/02 16:06:03 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,13 @@ static char	*append_to_save(char **save, int fd)
 	char		*nl_ptr;
 
 	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-	{
-		free(*save);
-		*save = NULL;
-		return (NULL);
-	}
-	while (true)
+	while (buffer)
 	{
 		read_size = read(fd, buffer, BUFFER_SIZE);
 		if (read_size <= 0)
 			break ;
 		buffer[read_size] = '\0';
 		*save = gnl_strjoin_with_free(save, &buffer, 0b10);
-		if (!*save)
-		{
-			free(buffer);
-			return (NULL);
-		}
 		nl_ptr = gnl_strchr(*save, '\n');
 		if (nl_ptr)
 		{
@@ -52,6 +41,17 @@ static char	*append_to_save(char **save, int fd)
 	return (NULL);
 }
 
+static char	*get_end_ptr(char **save, int fd)
+{
+	char	*end_ptr;
+
+	end_ptr = gnl_strchr(*save, '\n');
+	if (end_ptr)
+		return (end_ptr + 1);
+	else
+		return (append_to_save(save, fd));
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*save[FD_MAX + 1];
@@ -61,11 +61,7 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || FD_MAX < fd)
 		return (NULL);
-	end_ptr = gnl_strchr(save[fd], '\n');
-	if (end_ptr)
-		end_ptr++;
-	else
-		end_ptr = append_to_save(&save[fd], fd);
+	end_ptr = get_end_ptr(&save[fd], fd);
 	if (!end_ptr)
 		return (NULL);
 	line = gnl_strndup(save[fd], end_ptr - save[fd]);

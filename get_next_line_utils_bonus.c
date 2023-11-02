@@ -6,7 +6,7 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:03:32 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/27 18:17:22 by yliu             ###   ########.fr       */
+/*   Updated: 2023/11/02 15:20:44 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,6 @@ char	*gnl_strjoin_with_free(char **s1, char **s2, int free_flag)
 	s1_len = gnl_strlen(*s1);
 	s2_len = gnl_strlen(*s2);
 	ret = malloc(s1_len + s2_len + 1);
-	if (!ret)
-	{
-		if (free_flag & 0b10)
-		{
-			free(*s1);
-			*s1 = NULL;
-		}
-		if (free_flag & 0b01)
-		{
-			free(*s2);
-			*s2 = NULL;
-		}
-		return (NULL);
-	}
 	if (ret && *s1)
 		gnl_strlcpy(ret, *s1, s1_len + 1);
 	if (ret && *s2)
