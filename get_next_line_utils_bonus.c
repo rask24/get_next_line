@@ -6,13 +6,13 @@
 /*   By: reasuke <reasuke@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:03:32 by reasuke           #+#    #+#             */
-/*   Updated: 2023/10/19 21:23:20 by reasuke          ###   ########.fr       */
+/*   Updated: 2023/11/02 15:20:44 by reasuke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	len;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	if (!s)
 		return (NULL);
@@ -39,11 +39,11 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	gnl_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	src_len;
 
-	src_len = ft_strlen(src);
+	src_len = gnl_strlen(src);
 	if (dstsize)
 	{
 		while (*src && --dstsize)
@@ -53,7 +53,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (src_len);
 }
 
-char	*ft_strndup(const char *s, size_t n)
+char	*gnl_strndup(const char *s, size_t n)
 {
 	char	*ret;
 
@@ -62,34 +62,34 @@ char	*ft_strndup(const char *s, size_t n)
 	ret = malloc(n + 1);
 	if (!ret)
 		return (NULL);
-	ft_strlcpy(ret, s, n + 1);
+	gnl_strlcpy(ret, s, n + 1);
 	return (ret);
 }
 
-char	*ft_strjoin_with_free(const char *s1, const char *s2, int free_flag)
+char	*gnl_strjoin_with_free(char **s1, char **s2, int free_flag)
 {
 	char	*ret;
 	size_t	s1_len;
 	size_t	s2_len;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	if (!s1 && !s2)
+	if (!*s1 && !*s2)
 		return (NULL);
+	s1_len = gnl_strlen(*s1);
+	s2_len = gnl_strlen(*s2);
 	ret = malloc(s1_len + s2_len + 1);
-	if (ret && s1)
-		ft_strlcpy(ret, s1, s1_len + 1);
-	if (ret && s2)
-		ft_strlcpy(ret + s1_len, s2, s2_len + 1);
-	if (s1 && free_flag & 0b10)
+	if (ret && *s1)
+		gnl_strlcpy(ret, *s1, s1_len + 1);
+	if (ret && *s2)
+		gnl_strlcpy(ret + s1_len, *s2, s2_len + 1);
+	if (*s1 && free_flag & 0b10)
 	{
-		free((char *)s1);
-		s1 = NULL;
+		free(*s1);
+		*s1 = NULL;
 	}
-	if (s2 && free_flag & 0b01)
+	if (*s2 && free_flag & 0b01)
 	{
-		free((char *)s2);
-		s2 = NULL;
+		free(*s2);
+		*s2 = NULL;
 	}
 	return (ret);
 }
